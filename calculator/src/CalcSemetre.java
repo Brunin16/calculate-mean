@@ -26,63 +26,41 @@ public class CalcSemetre {
         cps.remove((Double) menorNota);
     }
 
+    private Double pegarNota(String nome, List<Double> lista, Integer i) {
+        Double nota;
+        String msg = (i != null)?"Qual sua nota do " + nome + i + ":": "Qual sua nota do " + nome + ":";
+        while (true) {
+            try {
+                System.out.println(msg);
+                nota = sc.nextDouble();
+                if (nota < 0 || nota > 10) {
+                    throw new Exception("Nota inválida! A nota deve estar entre 0 e 10.");
+                }
+                lista.add(nota);
+                break;
+            } catch (Exception e) {
+                String msge = (e.getMessage() != null)? e.getMessage() : "Entrada inválida!";
+                System.out.println(msge + " Tente novamente.");
+                sc.nextLine();
+            }
+        }
+        return nota;
+    }
+
     public Double calcularSemestre(){
         List<Double> cps = new ArrayList<>();
-        Double cp;
         List<Double> sprints = new ArrayList<>();
-        Double sprint;
-        Double gs;
 
         for (int i = 1; i <= 3; i++) {
-            while (true) {
-                try {
-                    System.out.println("Qual sua nota do cp" + i + ":");
-                    cp = sc.nextDouble();
-                    if (cp < 0 || cp > 10) {
-                        throw new Exception("Nota inválida! A nota deve estar entre 0 e 10.");
-                    }
-                    cps.add(cp);
-                    break;
-                } catch (Exception e) {
-                    String msg = (e.getMessage() != null)? e.getMessage() : "Entrada inválida!";
-                    System.out.println(msg + " Tente novamente.");
-                    sc.nextLine();
-                }
-            }
+            pegarNota("cp", cps, i);
         }
         excluirMenorNota(cps);
 
         for (int i = 1; i <= 2; i++) {
-            while (true) {
-                try {
-                    System.out.println("Qual sua nota do sprint" + i + ":");
-                    sprint = sc.nextDouble();
-                    if (sprint < 0 || sprint > 10) {
-                        throw new Exception("Nota inválida! A nota deve estar entre 0 e 10.");
-                    }
-                    sprints.add(sprint);
-                    break;
-                } catch (Exception e) {
-                    String msg = (e.getMessage() != null)? e.getMessage() : "Entrada inválida!";
-                    System.out.println(msg + " Tente novamente.");
-                    sc.nextLine();
-                }
-            }
+            pegarNota("sprints", sprints, i);
         }
-        while (true) {
-            try {
-                System.out.println("Qual sua nota da gs");
-                gs = sc.nextDouble();
-                if (gs < 0 || gs > 10) {
-                    throw new Exception("Nota inválida! A nota deve estar entre 0 e 10.");
-                }
-                break;
-            } catch (Exception e) {
-                    String msg = (e.getMessage() != null)? e.getMessage() : "Entrada inválida!";
-                    System.out.println(msg + " Tente novamente.");
-                    sc.nextLine();
-                }
-        }
+        
+        Double gs = pegarNota("gs", new ArrayList<>(), null);
         Double pcc = calculaPCC(cps, sprints);
         return (pcc * 0.4) + (gs* 0.6);
     }
