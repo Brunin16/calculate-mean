@@ -26,7 +26,7 @@ public class CalcSemetre {
         cps.remove((Double) menorNota);
     }
 
-    public Double CalcularSemestre(){
+    public Double calcularSemestre(){
         List<Double> cps = new ArrayList<>();
         Double cp;
         List<Double> sprints = new ArrayList<>();
