@@ -6,30 +6,26 @@ public class CalcSemetre {
     Scanner sc = new Scanner(System.in);
 
     private Double calculaPCC(List<Double> cps,List<Double> sprints ){
-        Double mediaCps = 0.0;
-        Double mediaSprints = 0.0;
-        for(int i = 0; i < cps.size(); i++){
-            mediaCps += cps.get(i);
-        }
-        mediaCps /= cps.size();
-        for(int i = 0; i < sprints.size(); i++){
-            mediaSprints += sprints.get(i);
-        }
-        mediaSprints /= sprints.size();
+        Double mediaCps = cps.stream()
+                            .mapToDouble(Double::doubleValue)
+                            .average()
+                            .orElse(0.0);
+        Double mediaSprints = sprints.stream()
+                                    .mapToDouble(Double::doubleValue)
+                                    .average()
+                                    .orElse(0.0);
+
         return (mediaCps + mediaSprints) / 2;
     }
 
     private void excluirMenorNota(List<Double> cps){
-        double menorNota = 100;
-        int indexMenorNota = 0;
-        for(int i =0 ; i < cps.size() ; i++){
-            if (cps.get(i) < menorNota){
-                menorNota = cps.get(i);
-                indexMenorNota = i;
-            }
-        }
-        cps.remove(indexMenorNota);
+        double menorNota = cps.stream()
+                            .min(Double::compare)
+                            .orElseThrow();
+        
+        cps.removeIf(cp -> cp == menorNota);
     }
+
     public Double CalcularSemestre(){
         List<Double> cps = new ArrayList<>();
         Double cp;
@@ -48,7 +44,8 @@ public class CalcSemetre {
                     cps.add(cp);
                     break;
                 } catch (Exception e) {
-                    System.out.println(e.getMessage() + " Tente novamente.");
+                    String msg = (e.getMessage() != null)? e.getMessage() : "Entrada inválida!";
+                    System.out.println(msg + " Tente novamente.");
                     sc.nextLine();
                 }
             }
@@ -66,7 +63,8 @@ public class CalcSemetre {
                     sprints.add(sprint);
                     break;
                 } catch (Exception e) {
-                    System.out.println(e.getMessage() + " Tente novamente.");
+                    String msg = (e.getMessage() != null)? e.getMessage() : "Entrada inválida!";
+                    System.out.println(msg + " Tente novamente.");
                     sc.nextLine();
                 }
             }
@@ -80,9 +78,10 @@ public class CalcSemetre {
                 }
                 break;
             } catch (Exception e) {
-                System.out.println(e.getMessage() + " Tente novamente.");
-                sc.nextLine();
-            }
+                    String msg = (e.getMessage() != null)? e.getMessage() : "Entrada inválida!";
+                    System.out.println(msg + " Tente novamente.");
+                    sc.nextLine();
+                }
         }
         Double pcc = calculaPCC(cps, sprints);
         return (pcc * 0.4) + (gs* 0.6);
