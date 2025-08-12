@@ -1,15 +1,15 @@
 public class Main {
     public static void main(String[] args) {
-        CalcAnual ca = new CalcAnual();
-        CalcSemetre cs = new CalcSemetre();
-        Double primeiroSemestre = cs.CalcularSemestre();
+        CalcAnnual ca = new CalcAnnual();
+        CalcSemester cs = new CalcSemester();
+        Double primeiroSemestre = cs.calculateSemester();
 
-        System.out.println("Media Mensal do Primeiro Semestre: " + primeiroSemestre);
+        System.out.println("First semester mean: " + primeiroSemestre);
 
-        Double segundoSemestre = cs.CalcularSemestre();
-        System.out.println("Media Mensal do Segundo Semestre: " + segundoSemestre);
+        Double segundoSemestre = cs.calculateSemester();
+        System.out.println("Second semester mean: " + segundoSemestre);
 
-        Double mediaAnual = ca.MediaMensal(primeiroSemestre, segundoSemestre);
-        System.out.println("Media Anual: " + mediaAnual);
+        Double mediaAnual = ca.meanAnnual(primeiroSemestre, segundoSemestre);
+        System.out.println("Annual Mean: " + mediaAnual);
     }
 }
