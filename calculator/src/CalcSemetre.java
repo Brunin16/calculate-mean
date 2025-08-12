@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class CalcSemetre {
     Scanner sc = new Scanner(System.in);
 
-    Double calculaPCC(List<Double> cps,List<Double> sprints ){
+    private Double calculaPCC(List<Double> cps,List<Double> sprints ){
         Double mediaCps = 0.0;
         Double mediaSprints = 0.0;
         for(int i = 0; i < cps.size(); i++){
@@ -19,7 +19,7 @@ public class CalcSemetre {
         return (mediaCps + mediaSprints) / 2;
     }
 
-    void excluirMenorNota(List<Double> cps){
+    private void excluirMenorNota(List<Double> cps){
         double menorNota = 100;
         int indexMenorNota = 0;
         for(int i =0 ; i < cps.size() ; i++){
@@ -30,7 +30,7 @@ public class CalcSemetre {
         }
         cps.remove(indexMenorNota);
     }
-    Double CalcularSemestre(){
+    public Double CalcularSemestre(){
         List<Double> cps = new ArrayList<>();
         Double cp;
         List<Double> sprints = new ArrayList<>();
