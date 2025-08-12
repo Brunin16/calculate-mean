@@ -23,7 +23,7 @@ public class CalcSemetre {
                             .min(Double::compare)
                             .orElseThrow();
         
-        cps.removeIf(cp -> cp == menorNota);
+        cps.remove((Double) menorNota);
     }
 
     public Double CalcularSemestre(){
